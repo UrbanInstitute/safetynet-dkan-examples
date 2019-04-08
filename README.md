@@ -6,3 +6,5 @@ Safety Net Almanac data. Data is stored at datacatalog.urban.org at https://data
 
 The function returns a Pandas dataframe, the program test_SNA.py provides an example call. The function get_SNA_data() keeps getting 
 data from the DKAN API endpoint until all records for the statid are obtained.
+
+Statistics are defined in the data dictionary for the Safety Net Data https://datacatalog.urban.org/sites/default/files/data-dictionary-files/SNA_Statistics_Dictionary.xlsx .
