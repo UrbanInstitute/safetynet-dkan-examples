@@ -2,7 +2,8 @@
 
 import safetynet_dkan as sd
 
-df = sd.get_SNA_data(102)
+df_data = sd.get_SNA_data(103)
+df_meta = sd.get_SNA_meta(103)
 
 
 
