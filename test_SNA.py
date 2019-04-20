@@ -2,8 +2,14 @@
 
 import safetynet_dkan as sd
 
-df_data = sd.get_SNA_data(103)
-df_meta = sd.get_SNA_meta(103)
+mystatid = 103
+myprogram_name = sd.validate_statid(mystatid)
+print("Program name is",myprogram_name," for statid ",mystatid)
+
+df_data = sd.get_SNA_data(mystatid)
+df_meta = sd.get_SNA_meta(mystatid)
+
+
 
 
 

@@ -22,28 +22,8 @@ def get_SNA_data(statid):
     # Note: we're leaving out the fields[] parameter, as the default is all fields in original order
     #       there were problems passing in specific multiple field names
     #
-    
-    if   ( statid  >= 1 and statid <= 43 ):
-        myprogram_name = 'TANF'    
-    elif (  statid  >= 101 and statid <= 193):
-        myprogram_name = 'SNAP'
-    elif (  statid  >= 301 and statid <= 373):
-        myprogram_name = 'EITC'
-    elif (  statid  >= 901 and statid <= 903):
-        myprogram_name = 'ECON'
-    elif (  statid  >= 401 and statid <= 416):
-        myprogram_name = 'SSI'  
-    elif (  statid  >= 501 and statid <= 528):
-        myprogram_name = 'CCDF' 
-    elif (  statid  >= 601 and statid <= 612):
-        myprogram_name = 'HUD'      
-    elif (  statid  >= 701 and statid <= 731):
-        myprogram_name = 'UI'    
-    elif (  statid  >= 801 and statid <= 802):
-        myprogram_name = 'MEDICAID'           
-    else:
-        print('No Coke, Pepsi?')
-        return()
+       
+    myprogram_name = validate_statid(statid)
     
     myprogram_resources = {'SNAP'       :'6fc0556b-de8b-41b9-a535-33243f2eb490', 
                            'TANF'       :'a77378a2-f26b-4802-be45-d558ea47b65b',
@@ -58,6 +38,10 @@ def get_SNA_data(statid):
     
 
     print ('Program name is: ',myprogram_name)
+    if ( myprogram_name == "ERROR"):
+        print("Error, invalid statid:", statid)
+        return()
+    
     myurl = 'https://datacatalog.urban.org/api/action/datastore/search.json'
     
     myresource_id = myprogram_resources[myprogram_name]
@@ -111,29 +95,12 @@ def get_SNA_meta(statid):
     #
     # leave this if/elif/then structure in here for validation
     #
-    if   ( statid  >= 1 and statid <= 43 ):
-        myprogram_name = 'TANF'    
-    elif (  statid  >= 101 and statid <= 193):
-        myprogram_name = 'SNAP'
-    elif (  statid  >= 301 and statid <= 373):
-        myprogram_name = 'EITC'
-    elif (  statid  >= 901 and statid <= 903):
-        myprogram_name = 'ECON'
-    elif (  statid  >= 401 and statid <= 416):
-        myprogram_name = 'SSI'  
-    elif (  statid  >= 501 and statid <= 528):
-        myprogram_name = 'CCDF' 
-    elif (  statid  >= 601 and statid <= 612):
-        myprogram_name = 'HUD'      
-    elif (  statid  >= 701 and statid <= 731):
-        myprogram_name = 'UI'    
-    elif (  statid  >= 801 and statid <= 802):
-        myprogram_name = 'MEDICAID'           
-    else:
-        print('No Coke, Pepsi?')
-        return()
     
-    myprogram_resources = {'Statistics_Ref'       :'4ea56583-1376-4a4e-93d3-757b736ea964'} 
+    myprogram_name = validate_statid(statid)
+    
+    if ( myprogram_name == "ERROR"):
+        print("Error, invalid statid:", statid)
+        return()
     
 
     print ('Program name is: ',myprogram_name)
@@ -167,7 +134,37 @@ def get_SNA_meta(statid):
     
     print('Total meta recs for statid:',totalrecs)
     print('Total meta retrieved      :',recs_sofar)    
-    return(df)    
+    return(df)   
+#    
+# validate_statid(statid)
+# This will return the program name for a valid statid
+#        
+    
+def validate_statid(statid):
+    
+    if   ( statid  >= 1 and statid <= 43 ):
+        myprogram_name = 'TANF'    
+    elif (  statid  >= 101 and statid <= 193):
+        myprogram_name = 'SNAP'
+    elif (  statid  >= 301 and statid <= 373):
+        myprogram_name = 'EITC'
+    elif (  statid  >= 901 and statid <= 903):
+        myprogram_name = 'ECON'
+    elif (  statid  >= 401 and statid <= 416):
+        myprogram_name = 'SSI'  
+    elif (  statid  >= 501 and statid <= 528):
+        myprogram_name = 'CCDF' 
+    elif (  statid  >= 601 and statid <= 612):
+        myprogram_name = 'HUD'      
+    elif (  statid  >= 701 and statid <= 731):
+        myprogram_name = 'UI'    
+    elif (  statid  >= 801 and statid <= 802):
+        myprogram_name = 'MEDICAID'           
+    else:
+        print('No Coke, Pepsi?')
+        return("ERROR")
+        
+    return(myprogram_name)        
     
 
     
