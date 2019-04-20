@@ -2,7 +2,7 @@
 
 import safetynet_dkan as sd
 
-mystatid = 103
+mystatid = 101
 myprogram_name = sd.validate_statid(mystatid)
 print("Program name is",myprogram_name," for statid ",mystatid)
 
