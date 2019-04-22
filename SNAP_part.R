@@ -21,7 +21,7 @@ library(sys)
 # set up for urban style
 set_urbn_defaults(style = "print")
 
-# make sure we are in the right working directory
+# make sure we are in the right working directory, just for the heck
 setwd("D:\\python\\SafetyNet\\DKAN")
 
 # call python programs - note that we make sure we know which python we're using
