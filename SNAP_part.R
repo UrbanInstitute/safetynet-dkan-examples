@@ -9,7 +9,6 @@
 #   df_data - the data
 #
 
-
 library(ggplot2)
 library(urbnthemes)
 library(extrafont)
@@ -30,7 +29,7 @@ source_python("D:/python/SafetyNet/DKAN/safetynet_dkan.py")
 source_python("D:/python/SafetyNet/DKAN/test_SNA.py")
 
 
-# following the call, we should have the two dataframes from thy python functions
+# following the call, we should have the two dataframes from the python functions
 mytitle    =  df_meta["statistics_label"]
 mynotes    =  df_meta["notes"]
 
@@ -42,7 +41,7 @@ q <- ggplot(data = df_data, mapping = aes(x = year, y = as.integer(data), group=
   labs(title = mytitle,
        caption = mynotes,
        x = "Year",
-       y = "Thousands of Households")
+       y = mytitle)
 
 q + theme(axis.text.x = element_text(angle = 90, hjust = 1))
 

@@ -25,6 +25,7 @@ def get_SNA_data(statid):
        
     myprogram_name = validate_statid(statid)
     
+    # define a dictionary of program resourceids by programs
     myprogram_resources = {'SNAP'       :'6fc0556b-de8b-41b9-a535-33243f2eb490', 
                            'TANF'       :'a77378a2-f26b-4802-be45-d558ea47b65b',
                            'EITC'       :'8ecae928-c689-48cc-8953-6d4e0afc31bd',
