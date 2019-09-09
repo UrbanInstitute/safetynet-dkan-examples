@@ -1,5 +1,5 @@
 # Safetynet_dkan
-Programs to access the Safety Net Almanac data via the DKAN AP. Data is stored at datacatalog.urban.org at https://datacatalog.urban.org/dataset/safety-net-almanac-data. An example query for the DKAN API for this would be 
+Programs to access the Safety Net Almanac data via the DKAN API. Data is stored at datacatalog.urban.org at https://datacatalog.urban.org/dataset/safety-net-almanac-data. An example query for the DKAN API for this would be 
 https://datacatalog.urban.org/api/action/datastore/search.json?resource_id=aa7c5ea3-ff23-494d-8bbf-a7496a0541bc&limit=5
 
 
