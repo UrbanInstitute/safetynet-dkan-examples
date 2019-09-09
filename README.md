@@ -1,18 +1,18 @@
 # Safetynet_dkan
-Programs to access the Safety Net Almanac data via the DKAN API. Data are stored at datacatalog.urban.org at https://datacatalog.urban.org/dataset/safety-net-almanac-data. The Safety Net Almanac is a website currently located
+Programs to access the Safety Net Almanac data via the DKAN API. Data are stored at datacatalog.urban.org at https://datacatalog.urban.org/dataset/safety-net-almanac-data. 
+
+The Safety Net Almanac is a website currently located
 at https://safetynet.urban.org . The website uses Cold Fusion and a back end database in SQL Server to display graphics of 
 Safety Net data via a utility site datatools.urban.org, for example 
 https://datatools.urban.org/safetynet/Data/Series_Line/template.cfm?GraphicID=47&fullscreen for graphic id 47, which displays "SNAP Caseloads as Monthly Average of Households, 1989-2011" .
 
-Here we are striving to move the functionality of the site to DKAN, so data have been loaded into the Urban Institute Data Catalog for each safety net program and exposed via DKAN. An example query for the DKAN API for this would be 
-https://datacatalog.urban.org/api/action/datastore/search.json?resource_id=aa7c5ea3-ff23-494d-8bbf-a7496a0541bc&limit=5
+With the programs in this repo, we are working towards moving the functionality of the site to DKAN.  Data have been loaded into the Urban Institute Data Catalog for each safety net program and exposed via DKAN. An example query for the DKAN API for this would be 
+https://datacatalog.urban.org/api/action/datastore/search.json?resource_id=aa7c5ea3-ff23-494d-8bbf-a7496a0541bc&limit=5 . 
 
 In test_SNA.py, set mygraphicid to a graphic ID classified as "Series_Line" - this is the only type of graphic we've dealt with yet.
 
 We then call three Python functions to get three dataframes. The call to get_SNA_graphic supplies the statid used by the graphic,
-then this gets passed to validate_statid(statid), get_SNA_data(statid), and get_SNA_meta(statid) .
-
-Once these calls are made, we should have enough information to do a graphic. 
+then this gets passed to validate_statid(statid), get_SNA_data(statid), and get_SNA_meta(statid) . Once these calls are made, we should have enough information to do a graphic. 
 
 The R script SNA_do_grpahic.R calls this using the reticulate package, and then creates a graphic using ggplot2.
  
