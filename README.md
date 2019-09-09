@@ -7,14 +7,11 @@ https://datacatalog.urban.org/api/action/datastore/search.json?resource_id=aa7c5
 In test_SNA.py, set mygraphicid to a graphic ID classified as "Series_Line" - this is the only type of graphic we've dealt with yet.
 
 We then call three Python functions to get three dataframes. The call to get_SNA_graphic supplies the statid used by the graphic,
-then this gets passed to 
-    validate_statid(statid)
-    get_SNA_data(statid)
-    get_SNA_meta(statid)
+then this gets passed to validate_statid(statid), get_SNA_data(statid), and get_SNA_meta(statid) .
 
-once the above calls are made, we should have enough information to do a graphic
+Once these calls are made, we should have enough information to do a graphic. 
 
-The R script SNA_do_grpahic.R calls this using the reticulate package. 
+The R script SNA_do_grpahic.R calls this using the reticulate package, and then creates a graphic using ggplot2.
  
 This is a work in progress, next steps will include making everything work in R independently so we don't need reticulate. 
 Reticulate is great, but sometimes a Pandas dataframe will not load due to the row.names problem. We might also do a version
