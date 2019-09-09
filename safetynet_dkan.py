@@ -53,6 +53,7 @@ def get_SNA_data(statid):
               'offset': 0
               }
     myparams['filters[statid]'] = statid
+    myparams['filters[statecode]'] = 99
     
     # make the initial request
     r = requests.get(url = myurl,params = myparams)
@@ -136,6 +137,55 @@ def get_SNA_meta(statid):
     print('Total meta recs for statid:',totalrecs)
     print('Total meta retrieved      :',recs_sofar)    
     return(df)   
+
+#    
+# get_SNA_graphic(statid)
+# This will just get the metadata for a statid
+#    
+    
+def get_SNA_graphic(graphicid):
+    import pandas as pd
+    import requests
+    
+    recs_sofar = 0
+    
+
+    
+
+
+    myurl = 'https://datacatalog.urban.org/api/action/datastore/search.json'
+    
+    myresource_id = 'aa7c5ea3-ff23-494d-8bbf-a7496a0541bc'
+    myparams = {'resource_id': myresource_id,
+              'limit': 100,
+              'offset': 0
+              }
+    myparams['filters[graphicid]'] = graphicid    
+    
+    # make the initial request
+    r = requests.get(url = myurl,params = myparams)
+    x = r.json()
+#    print ( r.url )
+    df = pd.DataFrame(x['result']['records'])
+    totalrecs = x['result']['total']
+    recswegot = len(x['result']['records'])
+    recs_sofar = recs_sofar + recswegot
+    # end initial request
+    
+    # keep making requests until we get all the data for the statid
+    while ( recs_sofar < totalrecs) :
+        myparams['offset'] = myparams['offset'] + recswegot
+        r = requests.get(url = myurl,params = myparams)
+        x = r.json()
+        df = df.append(x['result']['records'])
+        recs_sofar = recs_sofar + len(x['result']['records'])
+    #ok, done
+    
+    print('Total recs for graphicid  :',totalrecs)
+    print('Total recs retrieved      :',recs_sofar)    
+    return(df)   
+
+
 #    
 # validate_statid(statid)
 # This will return the program name for a valid statid
