@@ -41,7 +41,7 @@ Populate three dataframes: df_graphic, df_data, and df_meta.
 
 The df_graphic dataframe gives us parameters for the graphic, like title, subtitle, notes, and the "statid" of the statistic being used.
 The df_data dataframe gives us the data, filtered by the statid from df_graphic
-The df_meta dataframe gives us the metadata for the 
+The df_meta dataframe gives us the metadata for the statid, but the information from the graphic should override (don't use this much)
 
 Following the example from https://rdrr.io/github/daltare/dkanTools/f/README.md (which gave a 404) 
 use our SNAP data from Safety Net Almanac instead of the California data portal
@@ -75,7 +75,7 @@ The read_dkan() function is what we need, see here https://rdrr.io/github/daltar
 #  47	      SNAP Caseloads as Monthly Average of Households, 1989-2011	
 # 149	      SNAP Federal and State Program Costs, 1969-2012	
 #
-mygraphicid = 26
+mygraphicid <- 26
 my_graphic_resource_id  <- 'aa7c5ea3-ff23-494d-8bbf-a7496a0541bc'  # resource id for Safety Net Graphics definitions data
 my_data_resource_id     <- '6fc0556b-de8b-41b9-a535-33243f2eb490'  # resource id for SNAP program data
 my_meta_resource_id     <- '4ea56583-1376-4a4e-93d3-757b736ea964'  # resource id for Statistics Reference meta data in SNA
