@@ -1,0 +1,117 @@
+---
+title: "DKAN R Experiments for Safety Net Almanac datastore"
+author: "Doug"
+date: "9/10/2019"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Trying out an example using read_dkan from the daltare/dkanTools package
+https://rdrr.io/github/daltare/dkanTools/man/read_dkan.html#heading-4 
+
+We use data from the Safety Net Almanac data in the Urban Data Catalog: https://datacatalog.urban.org/dataset/safety-net-almanac-data 
+
+The Safety Net Almance is online to show examples of how the graphics should look: http://safetynet.urban.org 
+
+We use the dkanTools package, documentation here:   https://rdrr.io/github/daltare/dkanTools/
+
+First get some libraries we usually like to use
+then install the dkanTools package (once)
+and use the library(dkanTools)
+
+```{r}
+library(ggplot2)
+library(urbnthemes)
+library(extrafont)
+library(tidyverse)
+library(sys)
+#install.packages("remotes")                   # 
+#remotes::install_github("daltare/dkanTools")  # we'll install once and then comment out
+library(dkanTools)
+```
+
+## Try accessing a datastore 
+Populate three dataframes: df_graphic, df_data, and df_meta. 
+
+The df_graphic dataframe gives us parameters for the graphic, like title, subtitle, notes, and the "statid" of the statistic being used.
+The df_data dataframe gives us the data, filtered by the statid from df_graphic
+The df_meta dataframe gives us the metadata for the 
+
+Following the example from https://rdrr.io/github/daltare/dkanTools/f/README.md (which gave a 404) 
+use our SNAP data from Safety Net Almanac instead of the California data portal
+
+The read_dkan() function is what we need, see here https://rdrr.io/github/daltare/dkanTools/man/read_dkan.html
+
+```{r}
+# the resource ids used for programs are listed below
+# resource ids for the graphics and the metadata for statistics will stay the same (until they change!?)
+#
+#  'SNAP'       '6fc0556b-de8b-41b9-a535-33243f2eb490' 
+#  'TANF'       'a77378a2-f26b-4802-be45-d558ea47b65b'
+#  'EITC'       '8ecae928-c689-48cc-8953-6d4e0afc31bd'
+#  'ECON'       'f4041439-66ea-49cf-9b41-685c6036ed93'
+#  'SSI'        '47df5bf5-0305-4df1-98dd-a2320941ecd3'
+#  'CCDF'       '441d6b32-d52f-4cbf-acf7-bff14fd06bc1'
+#  'HUD'        '06eac4b8-dbcd-41bf-81ce-1b15c771d048'
+#  'UI'         '951d6ace-51d1-4956-beaa-df5db9f1e9ae'
+#  'MEDICAID'   '6ae37f37-bbe5-4961-a092-abe8742742e8'
+# 
+# for this example, use SNAP program data, graphic ID 26, which retrieves data for statid 193 from 1999 through 2012
+# which should look like this https://datatools.urban.org/safetynet/Data/Series_Line/template.cfm?GraphicID=26
+#
+# you can change mygraphicid to values like the following, to get various SNAP graphics:
+#
+# GraphicID Title
+#   4	      SNAP Caseloads as Monthly Average of Individuals, 1969-2012	
+#   6	      SNAP Total Benefits Paid, 1969-2012	
+#   7	      SNAP Federal and State Program Costs, 1969-2012	
+#  26	      SNAP National Participation Rate, 1999-2010	
+#  47	      SNAP Caseloads as Monthly Average of Households, 1989-2011	
+# 149	      SNAP Federal and State Program Costs, 1969-2012	
+#
+mygraphicid = 26
+my_graphic_resource_id  <- 'aa7c5ea3-ff23-494d-8bbf-a7496a0541bc'  # resource id for Safety Net Graphics definitions data
+my_data_resource_id     <- '6fc0556b-de8b-41b9-a535-33243f2eb490'  # resource id for SNAP program data
+my_meta_resource_id     <- '4ea56583-1376-4a4e-93d3-757b736ea964'  # resource id for Statistics Reference meta data in SNA
+
+df_graphic  <- read_dkan(base_URL='https://datacatalog.urban.org/', resource_id = my_graphic_resource_id, filter_fields = c('graphicid'), filter_values = mygraphicid )
+df_data     <- read_dkan(base_URL='https://datacatalog.urban.org/', resource_id = my_data_resource_id, filter_fields = c('statid'), filter_values = df_graphic['statid']) 
+df_meta     <- read_dkan(base_URL='https://datacatalog.urban.org/', resource_id = my_meta_resource_id, filter_fields = c('statid'), filter_values = df_graphic['statid']) 
+
+
+```
+
+## 
+ok, now that we have the three dataframes, let's try a ggplot
+
+```{r}
+#
+# following the call, we should have the dataframes from the python functions
+mytitle     <-  df_graphic["title"]
+mysubtitle  <-  df_graphic["subtitle"]
+mynotes     <-  paste("Source:",df_graphic["graphic_source"], "\n" , "Note:",df_graphic["graphic_note"])
+mylegend_y  <-  df_graphic['yaxis_label']
+my_s1_scaler <- as.double(df_graphic['s1_scaler'])
+
+mydata <- df_data  
+
+# pass the data and labels to ggplot
+ggplot(data = mydata, mapping = aes(x = year, y = as.double(data)*my_s1_scaler, group=1)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_discrete() +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = mytitle,
+       subtitle = mysubtitle,
+       caption = mynotes,
+       x = "Year",
+       y = mylegend_y ) 
+
+```
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
