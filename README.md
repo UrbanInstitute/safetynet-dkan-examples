@@ -4,6 +4,8 @@ https://datacatalog.urban.org/api/action/datastore/search.json?resource_id=aa7c5
 
 For R: 
  See dkan_r_experiments.html and .rmd -- this can do everything one needs to do, in R. This uses the dkanTools package https://rdrr.io/github/daltare/dkanTools/ .
+ 
+ R markdown for the example is available here: https://urbaninstitute.github.io/safetynet-dkan-examples/dkan_r_experiments.html
 
 For Python:
  In test_SNA.py, set mygraphicid to a graphic ID classified as "Series_Line" - this is the only type of graphic we've dealt with yet.
