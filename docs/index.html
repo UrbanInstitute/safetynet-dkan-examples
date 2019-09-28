@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Safetynet_dkan</title>
+  </head>
+  <body>
+    <h1>Safetynet_dkan</h1>
+<p>
+Programs to access the Safety Net Almanac data via the DKAN API. Data is stored at datacatalog.urban.org at <a href="https://datacatalog.urban.org/dataset/safety-net-almanac-data">https://datacatalog.urban.org/dataset/safety-net-almanac-data</a>. An example query for the DKAN API for this would be <a href="https://datacatalog.urban.org/api/action/datastore/search.json?resource_id=aa7c5ea3-ff23-494d-8bbf-a7496a0541bc&limit=5">here</a>
+</p>
+<ul>
+<li>For R: See dkan_r_experiments.html and .rmd -- this can do everything one needs to do, in R. This uses the dkanTools package https://rdrr.io/github/daltare/dkanTools/.
+Click <a href="https://douglasmurray.github.io/Safetynet_DKAN/dkan_r_experiments.html">here to see the R Markdown for this</a>
+<li>
+For Python: In test_SNA.py, set mygraphicid to a graphic ID classified as "Series_Line" - this is the only type of graphic we've dealt with yet.
+  <ul>
+  <li>We then call three Python functions to get three dataframes. The call to get_SNA_graphic supplies the statid used by the graphic, then this gets passed to validate_statid(statid), get_SNA_data(statid), and get_SNA_meta(statid) .
+
+  <li>Once these calls are made, we should have enough information to do a graphic.
+
+  <li>The R script SNA_do_grpahic.R calls this using the reticulate package, and then creates a graphic using ggplot2. However, most likely the best idea is to use the functions in dkan_r_experiments.
+  </ul>
+</ul>
+<p>
+This is a work in progress, will post refinements as improvements are made, for example to automate getting current resource ids.
+</p>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
